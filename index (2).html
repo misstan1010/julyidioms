@@ -1,0 +1,276 @@
+import random
+
+# 根据PDF文件整理的成语库
+idioms = {
+    "才疏学浅": {"pinyin": "cái shū xué qiǎn", "meaning": "常用于自我谦逊，表示自己能力不足，学识有限"},
+    "餐风饮露": {"pinyin": "cān fēng yǐn lù", "meaning": "形容旅途或野外生活的艰苦"},
+    "惨不忍睹": {"pinyin": "cǎn bù rěn dǔ", "meaning": "形容情状凄惨，令人不忍看下去"},
+    "惨淡经营": {"pinyin": "cǎn dàn jīng yíng", "meaning": "用尽全部力量去做"},
+    "惨绝人寰": {"pinyin": "cǎn jué rén huán", "meaning": "悲惨至极"},
+    "沧海桑田": {"pinyin": "cāng hǎi sāng tián", "meaning": "比喻世事变化巨大"},
+    "藏龙卧虎": {"pinyin": "cáng lóng wò hǔ", "meaning": "隐藏不露的各种人才"},
+    "藏污纳垢": {"pinyin": "cáng wū nà gòu", "meaning": "比喻隐藏或包容坏人坏事，形容坏人聚积的场所"},
+    "操之过急": {"pinyin": "cāo zhī guò jí", "meaning": "处理事情或解决问题时过于急躁"},
+    "草菅人命": {"pinyin": "cǎo jiān rén mìng", "meaning": "比喻轻视人命，任意加以残害。贬义"},
+    "参差不齐": {"pinyin": "cēn cī bù qí", "meaning": "形容很不整齐或水平不一"},
+    "长年累月": {"pinyin": "cháng nián lěi yuè", "meaning": "形容经过了很长的时间，强调时间漫长"},
+    "长篇大论": {"pinyin": "cháng piān dà lùn", "meaning": "篇幅冗长的文章，滔滔不绝的言论（多含讥讽意）"},
+    "长吁短叹": {"pinyin": "cháng xū duǎn tàn", "meaning": "（因烦恼、苦闷、悲伤等）不停地长一声短一声地叹气"},
+    "畅所欲言": {"pinyin": "chàng suǒ yù yán", "meaning": "痛痛快快地说出想说的话"},
+    "车水马龙": {"pinyin": "chē shuǐ mǎ lóng", "meaning": "车如流水，马如游龙。形容交通繁忙，繁华热闹"},
+    "彻头彻尾": {"pinyin": "chè tóu chè wěi", "meaning": "从头到尾，完完全全"},
+    "陈词滥调": {"pinyin": "chén cí làn diào", "meaning": "形容语言陈腐、空泛"},
+    "沉默寡言": {"pinyin": "chén mò guǎ yán", "meaning": "不声不响，很少说话，形容人性格内向，不爱多言"},
+    "趁火打劫": {"pinyin": "chèn huǒ dā jié", "meaning": "趁着人家失火去抢东西；泛指乘人危难时去捞好处"},
+    "称心如意": {"pinyin": "chèn xīn rú yì", "meaning": "形容事情的发展完全符合心意，一切都令人满意"},
+    "瞠目结舌": {"pinyin": "chēng mù jié shé", "meaning": "瞪眼翘舌说不出话来。形容人窘迫或惊呆的样子"},
+    "成人之美": {"pinyin": "chéng rén zhī měi", "meaning": "成全别人的好事，帮助别人实现愿望"},
+    "嗤之以鼻": {"pinyin": "chī zhī yǐ bí", "meaning": "用鼻子发出冷笑，表示不屑、鄙视"},
+    "持论公允": {"pinyin": "chí lùn gōng yǔn", "meaning": "言论公平，合乎情理"}
+}
+
+def display_welcome():
+    print("====================================")
+    print("      六月份会考成语学习游戏       ")
+    print("====================================")
+    print("本游戏包含25个会考成语，通过多种题型")
+    print("帮助您掌握成语的写法、读音和含义。")
+    print("------------------------------------")
+    print("题型包括：")
+    print("1. 选择题练习 - 根据成语选正确解释")
+    print("2. 错别字识别 - 找出并改正错别字")
+    print("3. 成语填空 - 补全成语缺失的字")
+    print("4. 拼音匹配 - 选择成语的正确拼音")
+    print("5. 词义配对 - 根据解释选择成语")
+    print("====================================\n")
+
+def main_menu():
+    print("\n主菜单")
+    print("1. 选择题练习")
+    print("2. 错别字识别")
+    print("3. 成语填空")
+    print("4. 拼音匹配")
+    print("5. 词义配对")
+    print("6. 查看所有成语")
+    print("7. 退出")
+    choice = input("请选择练习类型(1-7): ")
+    return choice
+
+def multiple_choice():
+    idiom = random.choice(list(idioms.keys()))
+    print(f"\n成语【{idiom}】的意思是:")
+    
+    # 准备选项 (1个正确答案和3个干扰项)
+    options = [idioms[idiom]["meaning"]]
+    while len(options) < 4:
+        wrong = random.choice(list(idioms.values()))["meaning"]
+        if wrong not in options:
+            options.append(wrong)
+    
+    random.shuffle(options)
+    
+    for i, option in enumerate(options, 1):
+        print(f"{i}. {option}")
+    
+    while True:
+        answer = input("请选择正确答案(1-4): ")
+        if answer in ["1", "2", "3", "4"]:
+            break
+        print("请输入1-4之间的数字!")
+    
+    if options[int(answer)-1] == idioms[idiom]["meaning"]:
+        print("\n✓ 正确!")
+        print(f"成语【{idiom}】的拼音是: {idioms[idiom]['pinyin']}")
+        return True
+    else:
+        print("\n✗ 错误!")
+        print(f"正确答案是: {idioms[idiom]['meaning']}")
+        print(f"成语【{idiom}】的拼音是: {idioms[idiom]['pinyin']}")
+        return False
+
+def wrong_character():
+    idiom = random.choice(list(idioms.keys()))
+    chars = list(idiom)
+    wrong_pos = random.randint(0, len(chars)-1)
+    
+    # 生成一个不同的汉字作为错别字
+    all_chars = set("".join(idioms.keys()))
+    wrong_char = random.choice(list(all_chars - set(chars[wrong_pos])))
+    
+    wrong_idiom = chars.copy()
+    wrong_idiom[wrong_pos] = wrong_char
+    wrong_idiom = "".join(wrong_idiom)
+    
+    print(f"\n找出下列成语中的错别字并改正:")
+    print(f"错误成语: {wrong_idiom}")
+    
+    while True:
+        answer = input("请输入正确的成语: ")
+        if len(answer) == len(idiom):
+            break
+        print(f"成语应为{len(idiom)}个字，请重新输入!")
+    
+    if answer == idiom:
+        print("\n✓ 正确!")
+        print(f"成语【{idiom}】的意思是: {idioms[idiom]['meaning']}")
+        print(f"拼音是: {idioms[idiom]['pinyin']}")
+        return True
+    else:
+        print("\n✗ 错误!")
+        print(f"正确答案是: {idiom}")
+        print(f"意思是: {idioms[idiom]['meaning']}")
+        print(f"拼音是: {idioms[idiom]['pinyin']}")
+        return False
+
+def fill_in_the_blank():
+    idiom = random.choice(list(idioms.keys()))
+    blank_pos = random.randint(0, len(idiom)-1)
+    blank_idiom = list(idiom)
+    blank_char = blank_idiom[blank_pos]
+    blank_idiom[blank_pos] = "___"
+    blank_idiom = "".join(blank_idiom)
+    
+    print(f"\n请补全成语:")
+    print(f"{blank_idiom}")
+    
+    answer = input(f"请填入第{blank_pos+1}个字: ")
+    
+    if answer == blank_char:
+        print("\n✓ 正确!")
+        print(f"完整成语: {idiom}")
+        print(f"意思是: {idioms[idiom]['meaning']}")
+        print(f"拼音是: {idioms[idiom]['pinyin']}")
+        return True
+    else:
+        print("\n✗ 错误!")
+        print(f"正确答案是: '{blank_char}'")
+        print(f"完整成语: {idiom}")
+        print(f"意思是: {idioms[idiom]['meaning']}")
+        print(f"拼音是: {idioms[idiom]['pinyin']}")
+        return False
+
+def pinyin_match():
+    idiom = random.choice(list(idioms.keys()))
+    print(f"\n成语【{idiom}】的拼音是:")
+    
+    # 准备选项 (1个正确答案和3个干扰项)
+    options = [idioms[idiom]["pinyin"]]
+    while len(options) < 4:
+        wrong = random.choice(list(idioms.values()))["pinyin"]
+        if wrong not in options:
+            options.append(wrong)
+    
+    random.shuffle(options)
+    
+    for i, option in enumerate(options, 1):
+        print(f"{i}. {option}")
+    
+    while True:
+        answer = input("请选择正确答案(1-4): ")
+        if answer in ["1", "2", "3", "4"]:
+            break
+        print("请输入1-4之间的数字!")
+    
+    if options[int(answer)-1] == idioms[idiom]["pinyin"]:
+        print("\n✓ 正确!")
+        print(f"成语【{idiom}】的意思是: {idioms[idiom]['meaning']}")
+        return True
+    else:
+        print("\n✗ 错误!")
+        print(f"正确答案是: {idioms[idiom]['pinyin']}")
+        print(f"成语【{idiom}】的意思是: {idioms[idiom]['meaning']}")
+        return False
+
+def meaning_match():
+    idiom, info = random.choice(list(idioms.items()))
+    print(f"\n【{info['meaning']}】 对应的成语是:")
+    
+    # 准备选项 (1个正确答案和3个干扰项)
+    options = [idiom]
+    while len(options) < 4:
+        wrong = random.choice(list(idioms.keys()))
+        if wrong not in options:
+            options.append(wrong)
+    
+    random.shuffle(options)
+    
+    for i, option in enumerate(options, 1):
+        print(f"{i}. {option}")
+    
+    while True:
+        answer = input("请选择正确答案(1-4): ")
+        if answer in ["1", "2", "3", "4"]:
+            break
+        print("请输入1-4之间的数字!")
+    
+    if options[int(answer)-1] == idiom:
+        print("\n✓ 正确!")
+        print(f"成语【{idiom}】的拼音是: {info['pinyin']}")
+        return True
+    else:
+        print("\n✗ 错误!")
+        print(f"正确答案是: {idiom}")
+        print(f"拼音是: {info['pinyin']}")
+        return False
+
+def show_all_idioms():
+    print("\n所有会考成语列表:")
+    print("====================================")
+    for idx, (idiom, info) in enumerate(idioms.items(), 1):
+        print(f"{idx:2d}. {idiom} - {info['pinyin']}")
+        print(f"    意思: {info['meaning']}")
+        if idx < len(idioms):
+            print("------------------------------------")
+    print("====================================")
+    input("\n按Enter键返回主菜单...")
+
+def play_game():
+    score = 0
+    rounds = 0
+    
+    display_welcome()
+    
+    while True:
+        choice = main_menu()
+        
+        if choice == "1":
+            if multiple_choice():
+                score += 1
+            rounds += 1
+        elif choice == "2":
+            if wrong_character():
+                score += 1
+            rounds += 1
+        elif choice == "3":
+            if fill_in_the_blank():
+                score += 1
+            rounds += 1
+        elif choice == "4":
+            if pinyin_match():
+                score += 1
+            rounds += 1
+        elif choice == "5":
+            if meaning_match():
+                score += 1
+            rounds += 1
+        elif choice == "6":
+            show_all_idioms()
+            continue
+        elif choice == "7":
+            break
+        else:
+            print("无效选择，请重新输入")
+            continue
+        
+        if rounds > 0:
+            print(f"\n当前得分: {score}/{rounds} (正确率: {score/rounds*100:.1f}%)")
+        input("\n按Enter键继续...")
+    
+    if rounds > 0:
+        print(f"\n游戏结束! 最终得分: {score}/{rounds} (正确率: {score/rounds*100:.1f}%)")
+    
+    print("\n祝你在会考中取得好成绩!")
+    print("====================================")
+
+if __name__ == "__main__":
+    play_game()
